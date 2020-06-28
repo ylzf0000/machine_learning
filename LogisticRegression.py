@@ -64,8 +64,9 @@ class LogisticRegression:
     def fit_added(self, X_train, y_train, X_val=None, y_val=None, *,
                   max_iters=100, learn_rate=0.0001, regular='l2', regular_weight=0.1, add_noise=False):
 
-        cov = np.eye(self.n + 1) * learn_rate
-        mean = [0 for i in range(self.n + 1)]
+        if add_noise:
+            cov = np.eye(self.n + 1) * (learn_rate ** 2)
+            mean = [0 for i in range(self.n + 1)]
 
         for i in range(1, max_iters + 1):
             grad = self.gradient_added(X_train, y_train, regular, regular_weight)
